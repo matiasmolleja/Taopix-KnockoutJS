@@ -30,7 +30,7 @@ If you do it that way, when an update arrives from Taopix, chances are that the 
 
 * Copy all javascript files to ./js
 
-Edit tpxBasketAPICustomize.js. Use your server's url in the line that says: var kServerURL = "";
+* Edit tpxBasketAPICustomize.js. Use your server's url in the line that says: var kServerURL = "";
 
 See the site working. And then use it as a reference to include it in your own site.
 
