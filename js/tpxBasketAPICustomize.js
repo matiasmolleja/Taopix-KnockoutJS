@@ -1,20 +1,9 @@
-// CUSTOMIZATION FOR TPXHIGHLEVELBASKETAPI
-// The purpose of this file is to separate original taopix provided file from the customization we need to do.
-// This will make easier future upgrades and maintenance.On each new taopix release we can simply overwrite tpxHighLevelBasketAPI.js and be sure that
-// all modifications are in this file and others that can be loaded after this one.
-// The way we customize functions and variables in original is by overriding them here.
-// So it is critical that this file is loaded after tpxHighLevelBasketAPI.js
-
-
-// External Dependencies:
-// tpxBasketAPIViewModel
-
-
+// It is critical that this file is loaded after tpxHighLevelBasketAPI.js
 
 var kServerURL = "";
-// fixing a translation issue. When this is fixed by taopix, we can remove this line.
-var kStr_LabelSignIn = "en Sign In<p>cs Přihlásit<p>da Log på<p>de Anmelden<p>es Iniciar Sesión<p>fi Kirjaudu<p>fr Connectez-vous<p>it Accedere<p>ja サインイン<p>ko 로그인<p>nl Aanmelden<p>no Logg inn<p>pl Zaloguj<p>pt Entre<p>ru Вход<p>sv Logga in<p>th เข้าสู่ระบบ<p>zh_cn 登录<p>zh_tw 登入";
 
+// fixing an spanish translation issue. When this is fixed by Taopix, we can remove this line.
+var kStr_LabelSignIn = "en Sign In<p>cs Přihlásit<p>da Log på<p>de Anmelden<p>es Iniciar Sesión<p>fi Kirjaudu<p>fr Connectez-vous<p>it Accedere<p>ja サインイン<p>ko 로그인<p>nl Aanmelden<p>no Logg inn<p>pl Zaloguj<p>pt Entre<p>ru Вход<p>sv Logga in<p>th เข้าสู่ระบบ<p>zh_cn 登录<p>zh_tw 登入";
 
 
 // GET PROJECT LIST CUSTOMIZATION
@@ -29,7 +18,7 @@ function tpxHighLevelGetProjectListView(pJsonResponseObject)
 // RENAME PROJECT CUSTOMIZATION
 // As an exception we need to override the control function too. Explained why below.
 
-// MATIAS: added a new parameter pProjectName. 
+// Added a new parameter pProjectName. 
 // That is what is already done by Taopix for duplicateProjectControl and deleteProjectControl.
 // Not sure why here it is different
 // The parameter is to avoid having to extract the projectname from an element in the html. 
@@ -180,7 +169,6 @@ function tpxHighLevelGetBasketContentsView(pJsonResponseObject)
 
 
 // REMOVE ITEM FROM BASKET CUSTOMIZATION
-
 function tpxHighLevelRemoveItemFromBasketView(pJsonResponseObject)
 {
 	if (pJsonResponseObject.result == 32)
@@ -230,7 +218,6 @@ function tpxHighLevelRemoveItemFromBasketView(pJsonResponseObject)
 
 
 // EMPTY BASKET CUSTOMIZATION
-
 function tpxHighLevelEmptyBasketView(pJsonResponseObject)
 {
 	if (pJsonResponseObject.result == 32)
@@ -283,7 +270,6 @@ function tpxHighLevelLoggedInStatusCallBack(pIsSignedIn)
 {
     tpxBasketAPIViewModel.isSignedIn(pIsSignedIn);
 }
-
 
 // DISABLING TAOPIX INITIAL UI LOCALIZATION BECAUSE IT IS NOT NEEDED WITH KNOCKOUT
 function tpxHighLevelBasketLocalise() { }

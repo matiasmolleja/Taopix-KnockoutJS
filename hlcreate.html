@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <script src="js/tpxLocalize.js"></script> -->
-    <!-- <script src="js/tpxHighLevelBasketAPIKO.js"></script> -->
-    <script src="js/tpxHighLevelBasketAPI.js"></script>
-    <link rel="stylesheet" href="css/basicModal.min.css">
-    <script src="js/basicModal.min.js"></script>
-	  <script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	  /**********************************************************************************/
-      /************* POSSIBLE FIX TO THE BACK BUTTON LOOP ISSUE *******************/
-      /**********************************************************************************/        
-        
+  <script src="js/tpxHighLevelBasketAPI.js"></script>
+
+  <link rel="stylesheet" href="css/basicModal.min.css">
+  <script src="js/basicModal.min.js"></script>
+
+  <script>
+    // The only reason to override this function is to fix an issue 
+    // that creates unwanted dummy projects each time the user clicks the back button 
+    // in the designer instead of getting back to the previous page.
     function tpxHighLevelCreateProjectView(pJsonResponseObject) {
       if ((pJsonResponseObject.result == 0) || (pJsonResponseObject.result == -2)) {
         onlineDesignURL = pJsonResponseObject.designurl;
@@ -21,16 +20,8 @@
         if (pJsonResponseObject.result == -2) {
           onlineDesignURL = onlineDesignURL;
         }
-        /**********************************************************************************/
-        /************* FIX START *******************/
-        /**********************************************************************************/        
-        
-        // commented: window.location = onlineDesignURL;
+        // Fix: Instead of  "window.location = onlineDesignURL;" we use:
         window.location.replace(onlineDesignURL);
-
-        /**********************************************************************************/
-        /*************  FIX END *******************/
-        /**********************************************************************************/
       }
       else {
         var resultAlert = {
@@ -49,16 +40,14 @@
             }
           }
         }
-
         basicModal.show(resultAlert);
       }
-
       return false;
     }
-
-
   </script>
-  </head>
-  <body onLoad="tpxHighLevelBasketInitialise()">
-  </body>
+</head>
+
+<body onLoad="tpxHighLevelBasketInitialise()">
+</body>
+
 </html>

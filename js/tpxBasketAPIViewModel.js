@@ -26,7 +26,7 @@
         }
 
         self.localize = function (key) {
-            var translated = tpxGetLocaleString(key); // tpxLocalize.localize(key);
+            var translated = tpxGetLocaleString(key);
             
             if (!translated) {
                 console.error('unable to translate string: ' + key);
