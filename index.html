@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Taopix Online Basket High Level Shopping Cart (KnockoutJS Enabled)</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/tpxHighLevelBasketAPI.css">
+	<link rel="stylesheet" href="css/basicModal.min.css">
+	<!-- custom css -->
+	<link rel="stylesheet" href="css/tpx-ko.css">
+
+	<script src="js/basicModal.min.js"></script>
+	<script src="js/tpxHighLevelBasketAPI.js"></script>
+	<!--overriding callbacks and vars in tpxHighLevelBasketAPI: to keep taopix js untouched-->
+	<script src="js/tpxBasketAPICustomize.js"></script>
+</head>
+
+<body onLoad="tpxHighLevelBasketInitialise()">
+	<nav>
+		<div class="container">
+			<ul class="navbar-left">
+				<li><a href="#" data-bind="text: localize(kStr_LabelSignIn), click: signIn, visible: !isSignedIn()"></a></li>
+				<li><a href="#" data-bind="text: localize(kStr_LabelLogout), click: logout, visible: isSignedIn()"></a> </li>
+				<li><a href="#" data-bind="text: localize(kStr_LabelRegister), click: register, visible: !isSignedIn()"></a></li>
+				<li><a href="#" data-bind="text: localize(kStr_LabelMyAccount), click: myAccount, visible: isSignedIn()"></a></li>				
+				<li style="display:none;" data-bind="visible: isSignedIn()">
+					<a href="#">
+						<i class="fa fa-folder-open"></i>
+						<span data-bind="text: localize(kStr_LabelMyProjects), click: projectsViewModel.getProjects"></span>
+					</a>
+				</li>
+			</ul>
+			<!--end navbar-left -->			
+			<ul class="navbar-right" style="display:none;" data-bind="visible: isSignedIn()">
+				<li>
+					<a href="#" id="basketlink" data-bind="click: cartViewModel.getCart">
+						<i class="fa fa-shopping-cart"></i>
+					</a>
+				</li>
+			</ul>
+			<!--end navbar-right -->
+		</div>
+		<!--end container -->
+	</nav>
+
+	<div class="container" style="display: none;" data-bind="visible: cartViewModel.isVisible">		
+		<div id="shoppigncartcontents" class="shopping-cart">
+			<!-- Shown when no items or not signed in -->
+			<span data-bind="visible: cartViewModel.items().length < 1 "> No items in cart</span>
+
+			<!-- Shown when signed in and there are items -->
+			<div data-bind="visible: cartViewModel.items().length > 0">
+				<div class="shopping-cart-header">
+					<i class="fa fa-shopping-cart cart-icon"></i><span id='basketcountbadgeinner' class="badge"><span data-bind="text: cartViewModel.items().length"></span></span>
+					<a href="#" data-bind="text:localize(kStr_ButtonEmptyBasket), click: cartViewModel.emptyBasket" class='emptycart'>Empty Basket</a>
+				</div>
+				<!--end shopping-cart-header -->
+
+				<div id='basketItemListContainer' class="shopping-cart-items-container">
+					<ul id='basketItemList' class="shopping-cart-items" data-bind="foreach: cartViewModel.items">
+
+						<div class="item" id="basketitemnumber" data-projectref="currentprojectref">
+
+							<div class="projectInfoContainer">
+								<div class="removefrombasket"> <i class="remove-icon fa fa-times" data-bind="click: cartViewModel.removeFromBasket"></i></div>
+								<div class="infocontainer">
+
+									<span class="item-projectname" data-bind="text: projectname"> </span>
+									<span class="item-layoutname" data-bind="text: $root.localize(kStr_LabelLayoutName)"> </span>
+									<span data-bind="text: layoutname.substring(3, layoutname.length)"> </span>
+
+									<div id="projectactionscontainer">
+										<a href="#" class="projectaction" data-bind="text: $root.localize(kStr_LabelEdit), click: $root.cartViewModel.editProject"> </a>
+										<a href="#" class="projectaction" data-bind="text: $root.localize(kStr_LabelRename), click: $root.cartViewModel.renameProject"> </a>
+										<a href="#" class="projectaction" data-bind="text: $root.localize(kStr_LabelDuplicate), click: $root.cartViewModel.duplicateProject"> </a>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</ul>
+
+
+					<div id="loadingspinnercontainer" class="loadingspinnercontainer">
+						<i id="loadingspinner" class="fa fa-spinner fa-pulse loading-spinner" data-bind="visible: cartViewModel.isLoadingProjectList"></i>
+					</div>
+				</div>
+
+				<a href="#" data-bind="text:localize(kStr_ButtonCheckout),  click: cartViewModel.checkout" class="button">Checkout</a>
+
+			</div>
+		</div>
+		<!--end shopping-cart -->
+	</div>
+	<!--end container -->
+
+	<div class="container" style="display: none;" data-bind="visible: projectsViewModel.isVisible">
+
+		<div id="projectlistcontents" class="projectlist">
+			<div id='projectsItemListContainer' class="projectlist-items-container">
+				<ul id='projectsItemList' class="shopping-cart-items" data-bind="foreach: projectsViewModel.items">
+
+					<li class="clearfix" id="projectListitemMasIndice" data-projectref="la currentProjectRef">
+						<div class="projectinfocontainer">
+
+							<div class="infocontainer">
+								<span class="item-projectname" id="item-projectname-useless" data-bind="text: projectname"> </span>
+								<span class="item-layoutname" data-bind="text: $root.localize(kStr_LabelLayoutName) + ':'"> </span>
+								<span data-bind="text: layoutname.substring(3, layoutname.length)"></span>
+								<div class="projectlistactionscontainer">
+									<a href="#" class="projectaction" data-bind="text: $root.localize(kStr_LabelEdit), click: $root.projectsViewModel.editProject"></a>
+									<a href="#" class="projectaction" data-bind="text: $root.localize(kStr_LabelRename), click: $root.projectsViewModel.renameProject"></a>
+									<a href="#" class="projectaction" data-bind="text: $root.localize(kStr_LabelDuplicate), click: $root.projectsViewModel.duplicateProject"></a>
+									<a href="#" class="projectaction" data-bind="text: $root.localize(kStr_LabelDelete), click: $root.projectsViewModel.deleteProject"></a>
+								</div>
+
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div id="projectloadingspinnercontainer" class="loadingspinnercontainer">
+					<i class="fa fa-spinner fa-pulse loading-spinner" data-bind="visible: projectsViewModel.isLoadingProjectList"></i>
+				</div>
+			</div>
+			<!--end shopping-cart -->
+		</div>
+		<!--end container -->
+	</div>
+
+	<h2>REPLACE THE FOLLOWING LINKS WITH VALID ONES FROM YOUR CATALOG</h2>	
+    <a href="#" onClick="tpxHighLevelCreateProjectControl('id=41.NTliYmM0OTQ,.3vAmdoW8JlVVkGiwIT3NlzXIcImO6iodfNEP2S76PuJHCrQVcWqez6QQLrc3zTsz&stu=123')">Create<a/>
+    <br />
+    <a href="#" onClick="tpxHighLevelCreateProjectControl('id=43.OTA3MjgzNTU,.1HRP2jGTO8Z4I3L7U-rwrbFqG2qLW0PqVQyGl-3u6ZskDd6KnWNywp4QX2ZFyRyZ')">Create Singleprint<a/>
+		
+	<!-- Knockout JS  version specific files	 -->
+	<script src="js/knockout-3.4.2.js"></script>	
+	<script src="js/cartViewModel.js"></script>
+	<script src="js/projectsViewModel.js"></script>
+	<script src="js/tpxBasketAPIViewModel.js"></script> 
+		
+  </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <script src="js/tpxLocalize.js"></script> -->
+    <!-- <script src="js/tpxHighLevelBasketAPIKO.js"></script> -->
+    <script src="js/tpxHighLevelBasketAPI.js"></script>
+    <link rel="stylesheet" href="css/basicModal.min.css">
+    <script src="js/basicModal.min.js"></script>
+	  <script>
+
+	  /**********************************************************************************/
+      /************* POSSIBLE FIX TO THE BACK BUTTON LOOP ISSUE *******************/
+      /**********************************************************************************/        
+        
+    function tpxHighLevelCreateProjectView(pJsonResponseObject) {
+      if ((pJsonResponseObject.result == 0) || (pJsonResponseObject.result == -2)) {
+        onlineDesignURL = pJsonResponseObject.designurl;
+
+        if (pJsonResponseObject.result == -2) {
+          onlineDesignURL = onlineDesignURL;
+        }
+        /**********************************************************************************/
+        /************* FIX START *******************/
+        /**********************************************************************************/        
+        
+        // commented: window.location = onlineDesignURL;
+        window.location.replace(onlineDesignURL);
+
+        /**********************************************************************************/
+        /*************  FIX END *******************/
+        /**********************************************************************************/
+      }
+      else {
+        var resultAlert = {
+          body: '<p>' + pJsonResponseObject.resultmessage + '</p>',
+          buttons: {
+            action: {
+              title: tpxGetLocaleString(kStr_ButtonOK),
+              fn: function () {
+                if ((pJsonResponseObject.redirecturl) && (pJsonResponseObject.redirecturl != '')) {
+                  document.location = pJsonResponseObject.redirecturl;
+                }
+                else {
+                  basicModal.close();
+                }
+              }
+            }
+          }
+        }
+
+        basicModal.show(resultAlert);
+      }
+
+      return false;
+    }
+
+
+  </script>
+  </head>
+  <body onLoad="tpxHighLevelBasketInitialise()">
+  </body>
+</html>
