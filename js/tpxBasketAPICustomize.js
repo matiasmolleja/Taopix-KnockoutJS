@@ -11,7 +11,7 @@
 
 
 
-var kServerURL = "https://taopixstaging.photooka.com";
+var kServerURL = "";
 // fixing a translation issue. When this is fixed by taopix, we can remove this line.
 var kStr_LabelSignIn = "en Sign In<p>cs Přihlásit<p>da Log på<p>de Anmelden<p>es Iniciar Sesión<p>fi Kirjaudu<p>fr Connectez-vous<p>it Accedere<p>ja サインイン<p>ko 로그인<p>nl Aanmelden<p>no Logg inn<p>pl Zaloguj<p>pt Entre<p>ru Вход<p>sv Logga in<p>th เข้าสู่ระบบ<p>zh_cn 登录<p>zh_tw 登入";
 
